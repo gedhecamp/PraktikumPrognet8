@@ -14,3 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes(['verify' => true]);
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('/user/logout','Auth\LoginController@logoutUser')->name('user.logout');
+
+Route::group(['prefix'=>'admin', 'guard'=>'admin'],function(){
+    Route::get('/login', 'AuthAdmin\LoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'AuthAdmin\LoginController@login')->name('admin.login.submit');
+    Route::get('/', 'AdminController@index')->name('admin.home');
+    Route::get('/logout','AuthAdmin\LoginController@logout')->name('admin.logout');
+});

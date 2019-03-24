@@ -6,11 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use Notifiable;
-
-    protected $table = 'users';
+    protected $guard = 'admin';
+    protected $table = 'admins';
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','status','profile_image',
+        'username', 'name', 'password', 'phone', 'profile_image',
     ];
 
     /**
@@ -28,14 +28,5 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 }
